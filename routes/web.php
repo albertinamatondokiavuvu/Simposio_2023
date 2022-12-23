@@ -1,6 +1,11 @@
 <?php
 
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HelloController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +19,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return Inertia::render('welcome');
+})->name('/');
+
+Route::get('home', [HomeController::class, 'index'])->name('home');
+Route::resource('employee', EmployeeController::class)->only(['index', 'store', 'update', 'destroy']);
+
+require __DIR__.'/auth.php';
